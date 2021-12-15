@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 //
 using namespace std;
 //
@@ -18,14 +19,14 @@ int main()
         cout << "------------------------------"<<endl;
         cout << "2.Combinacion de billetes"<<endl;
         cout << "3.Verficacion de un mes"<<endl;
-        cout << "4."<<endl;
+        cout << "4.Reloj de 24 horas"<<endl;
         cout << "6.Valor aproximado del numero euler"<<endl;
         cout << "9.Suma digitos elevados a si mismos"<<endl;
         cout << "10.Numero primo de orden n"<<endl;
         cout << "11.Minimo Comun Multiplo"<<endl;
         cout << "13.Suma de todos los numeros primos menores de n"<<endl;
         cout << "15."<<endl;
-        cout << "16."<<endl;
+        cout << "16.Serie de Collatz"<<endl;
         cout << "0.Para SALIR..."<<endl;;
         cout << "------------------------------"<<endl;
         cin>>opcion;
@@ -147,7 +148,7 @@ int main()
             cout << "ingrese el numero al que le quiere sumar sus numeros primos menores: " << endl;
             cin >> n;
             int acuSUM,com;
-            acuSUM=0, com=0;
+            acuSUM=0, com=0; // acusmu= sumatoria de primos  com= contador de numeros naturales para determinar si es primo
             while (com<n){
                 if (esPrimo(com)){
                     acuSUM= acuSUM + com;
@@ -162,18 +163,20 @@ int main()
            cout << "Ingrese un numero para el MCM:" << endl;
            cin >> top;
            //
-           int mcm, res, num;
+           int mcm, res, num; // mcm, va acumulando el minimo comun multiplo a medida que aumenta los numeros
+           // res, utilizado para calcular el residuo
+           // num, utilizado para calculo del mcm sin afectar el i
            long prod;
-           for(int i = 1; i <= top; i++) { // ciclo
+           for(int i = 1; i <= top; i++) { // ciclo desde 1 hasta el # que se le calcula el mcm
               num = i;
               if (num == 1) {
                   mcm = num;
               } else {
-                  prod = mcm * num;
+                  prod = mcm * num; // prod, variable que almacena el prodcuto del mcm y del num
                   //
-                  do
+                  do // ciclo que procesa los numeros que son distintos a 1
                   {
-                      res = mcm % num;
+                      res = mcm % num; // calculo de un divisor comun!
                       mcm = num;
                       num = res;
                   } while (res != 0);
@@ -184,7 +187,61 @@ int main()
            cout << "El minimo comun multiplo es: " << mcm << endl;
            break;
 
+         case 4:
+            int h1, m1, h2, m2, acuHOR, acuMIN;
+            cout<< "ingrese la primera hora: " << endl;
+            cin>>h1;
+            cout << "ingrese los minutos: " << endl;
+            cin >> m1;
+            cout << "ingrese la segunda hora: " << endl;
+            cin>> h2;
+            cout << "ingrese los minutos: " << endl;
+            cin >> m2;
+            acuHOR= (h1+h2);
 
+            acuMIN= (m1+m2);
+            if (acuHOR<=23 && acuMIN<=59) {
+                cout << "la hora es: " << acuHOR << ":" << acuMIN << endl;
+                }
+               if (acuHOR>=24) {
+                 acuHOR= (acuHOR - 24);
+
+                 cout << "la hora es: "<< acuHOR << ":" << acuMIN<< endl;
+                }
+              if (acuMIN>60) {
+                       acuMIN= (acuMIN - 60);
+                       acuHOR=(acuHOR + 1);
+                       cout << "la hora es: "<< acuHOR << ":" << acuMIN<< endl;
+                }
+
+          case 16:
+                int j;
+                cout << "Ingrese la semilla: " << endl;
+                cin >> j; // leemos la semilla
+
+                vector<int> a; // conjunto de datos de un mismo tipo
+                int semilla = j;
+
+                // Calcular serie
+                while (semilla != 1) {
+                    a.push_back(semilla);
+                    if (semilla % 2 == 0) {
+                        semilla = semilla / 2;
+                    } else {
+                        semilla = (3 * semilla) + 1;
+                    }
+                }
+                // La semilla es 1
+                a.push_back(semilla); // añadir el elemente que esta dento () adentro del vector
+
+                cout << "La seria mas larga con la semilla: " << j << ", teniendo " << a.size() << " elementos." << endl;
+
+                // Imprimir la serie
+                cout << "La serie es la siguiente:" << endl;
+
+                for (int i=0; i < a.size(); i++) {
+                    cout << a[i] << " ";
+                }
 
         } // fin switch
        } //fin while
