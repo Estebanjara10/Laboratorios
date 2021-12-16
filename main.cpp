@@ -105,10 +105,10 @@ int main()
             double e;
             e = 0;
             for(unsigned int i=0;i<s;i++){
-                double u=fact(i);//muy importante
-                e+=1/u;// e: variable declarada al inicio del main.
-            }
-            cout<<"\nel valor aproximado de e en base a su numero "<<s<<" es "<<e<<endl;
+                double u=fact(i);
+                e+=1/u;
+             }
+            cout<<"e es aproximadamente: "<<e<<endl;
             break;
 
           case 9:
