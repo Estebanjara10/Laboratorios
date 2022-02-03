@@ -1,268 +1,149 @@
 #include <iostream>
+#include<stdlib.h>
+#include<time.h>
+#include<stdio.h>
 #include <string>
-#include <vector>
-//
+
+
+
 using namespace std;
-//
-int fact(int);
 long potenciaNum(long numero, long potencia);
-bool esPrimo(int numero);
-//
+long str_to_num(string n);
+void num_to_str(int num, string& strx);
+
 int main()
-{
-    // Declaracion de variables:
+   {
     int opcion=1;
+    int pesos[10]={50000,20000,10000,5000,2000,1000,500,200,100,50};
+    char letras[200];
+    string palabra;
+    string strbase = "base";
     string n;
+    int num;
+
+
+
     //
-    while(opcion != 0){
-        cout << endl << "Seleccione una opcion"<<endl;
-        cout << "------------------------------"<<endl;
-        cout << "2.Combinacion de billetes"<<endl;
-        cout << "3.Verficacion de un mes"<<endl;
-        cout << "4.Reloj de 24 horas"<<endl;
-        cout << "6.Valor aproximado del numero euler"<<endl;
-        cout << "9.Suma digitos elevados a si mismos"<<endl;
-        cout << "10.Numero primo de orden n"<<endl;
-        cout << "11.Minimo Comun Multiplo"<<endl;
-        cout << "13.Suma de todos los numeros primos menores de n"<<endl;
-        cout << "15."<<endl;
-        cout << "16.Serie de Collatz"<<endl;
-        cout << "0.Para SALIR..."<<endl;;
-        cout << "------------------------------"<<endl;
-        cin>>opcion;
-        switch(opcion){
-            case 2:
-                int valor,entero;
-                cout << "Ingrese el valor:" << endl;
-                cin >> valor;
-                // Se evalua 50mil:
-                entero = (int)(valor/50000);
-                cout << "se necesitan " << entero <<" billetes de 50000"<<endl;
-                valor=(valor%50000);
-                // Se evalua 20mil:
-                entero = (int)(valor/20000);
-                cout << "se necesitan " << entero <<" billetes de 20000"<<endl;
-                valor=(valor%20000);
-                // Se evalua 10mil:
-                entero = (int)(valor/10000);
-                cout << "se necesitan " << entero <<" billetes de 10000"<<endl;
-                valor=(valor%10000);
-                // Se evalua 5mil:
-                entero = (int)(valor/5000);
-                cout << "se necesitan " << entero <<" billetes de 5000"<<endl;
-                valor=(valor%5000);
-                // Se evalua 2mil:
-                entero = (int)(valor/2000);
-                cout << "se necesitan " << entero <<" billetes de 2000"<<endl;
-                valor=(valor%2000);
-                // Se evalua mil:
-                entero = (int)(valor/1000);
-                cout << "se necesitan " << entero <<" billetes de 1000"<<endl;
-                valor=(valor%1000);
-                // Se evalua moneda 500:
-                entero = (int)(valor/500);
-                cout << "se necesitan " << entero <<" monedas de 500"<<endl;
-                valor=(valor%500);
-                // Se evalua moneda 200:
-                entero = (int)(valor/200);
-                cout << "se necesitan " << entero <<" monedas de 200"<<endl;
-                valor=(valor%200);
-                // Se evalua moneda 100:
-                entero = (int)(valor/100);
-                cout << "se necesitan " << entero <<" monedas de 100"<<endl;
-                valor=(valor%100);
-                // Se evalua moneda 50:
-                entero = (int)(valor/50);
-                cout << "se necesitan " << entero <<" monedas de 50"<<endl;
-                valor=(valor%50);
-                cout<< "Faltante: "<<valor<<endl;
-              break; // case 2!!
-            case 3:
-                int dia; int mes;
-                cout << "ingrese numero del mes " << endl; // formato dd/mm/
-                cin >> mes;
-                cout << "ingrese numero del dia " << endl;
-                cin >> dia;
-                if (mes==2 && dia==29){
-                    cout << dia << "/" << mes <<"/" << "es valida en bisiesto"<<endl;
-                }
-                else if (((mes==3) || (mes==4) || (mes==6) || (mes==9) || (mes==11)) && (dia<=30)) {
-                    cout << dia << "/" << mes <<"/" << "es una fecha valida"<<endl;
-                }
-                else if (((1==mes) || (mes==5) || (mes==7) || (mes==8) || (mes==10) || (mes==12)) && (dia<=31)) {
-                    cout << dia << "/" << mes <<"/" << "es una fecha valida";
-                }    else {
+    srand(time(NULL));
+    //
 
-                    cout << dia << "/" << mes <<"/" << "es una fecha no valida"<<endl;
-
-                     }
-              break;
-           case 6:
-            // calcular un factorial n(n-1)!
-            unsigned int s;//sumas para aproximación
-            cout<<"Escriba un numero: ";
-            cin>>s;
-            double e;
-            e = 0;
-            for(unsigned int i=0;i<s;i++){
-                double u=fact(i);
-                e+=1/u;
+    while (opcion != 0){
+     cout << endl << "seleccione una opcion" << endl;
+     cout << "------------------------------"<<endl;
+     cout << "1.Combinacion de billetes"<<endl;
+     cout << "2.Letras aleatorias"<<endl;
+     cout << "4.De string a Int"<<endl;
+     cout << "5.De Int a string"<<endl;
+     cout << "7.caracteres repetidos"<<endl;
+     cout << "0.Para SALIR..."<<endl;
+     cout << "------------------------------"<<endl;
+     cin>>opcion;
+     switch(opcion){
+       case 1:
+         int valor, entero;
+         cout << "ingrese el valor" << endl;
+         cin >> valor;
+         for (int cont=0;cont < 10;cont++) {
+            // paso 1:
+            entero = (int)(valor/pesos[cont]); // se crea para ir haciendo divisiones de cada posicion del arreglo por el valor dado
+            // paso 2:
+            cout << "se necesitan " << entero <<" billetes de " << pesos[cont] <<endl;
+            valor=(valor%pesos[cont]);
+         }
+         cout<< "Faltante: "<<valor<<endl;
+         //
+         break;
+       case 2:
+         // inicializa 200 letras aleatorias:
+         cout << "VECTOR 200 LETRAS:" << endl;
+         for (int i = 0; i < 200; i++){
+             letras[i] = 'A' + rand() % (('Z' - 'A') + 1); // genera un numero entre 1-25 de acuerdo al ascii y los suma desde A(65) y Z(90)
+             cout << letras[i];
+         }
+         cout << endl << "------------" << endl;
+         // por cada letra del ABC recorrer el vector del 200:
+         for (int i = 0; i <= 25; i++){
+             //printf("La letra es: '%c' :: y la ABC es:'%c'\n", letras[i], 'A'+i);
+             //printf("La ABC es: '%c'\n", 'A'+i);
+             int cont = 0;
+             char abc = 'A' + i;
+             //printf("La ABC es: '%c'\n", abc);
+             for(int k=0; k < 200;k++) { // recorrer el vector y contar las cantidad de veces que s erepite cada letra
+                 if(abc == letras[k]) {
+                    cont++;
+                 }
              }
-            cout<<"e es aproximadamente: "<<e<<endl;
-            break;
+             cout << abc << " : " << cont << endl;
+         }
+         //
+         break;
+     case 4:
+         cout << "ingrese los numeros: " << endl;
+         cin >> n;
+         cout << "la conversion es (entero): " << str_to_num(n) << endl;
+         break;
+     case 5:
+         cout  << "ingrese los numeros:  " << endl;
+         cin >> num;
+         //cout << "el resultado es: " <<  (num%10)/1 << " " << (num%100)/10 << ""  <<  " " << (num%1000)/100 << endl;
+         /*
+         int temp=num; int l=1;
+         while (temp>0) {
+                 pote=potenciaNum(10,l);
+                 //cout << temp%pote  << endl;
+                 temp-=temp%pote;
+                 l++;
+         }
+         l--;
+         int digitos[l]; int div=1;
+         string numstr="*", tempstr="";
+         for (int i=0; i < l ;i++ ) {
+             pote=potenciaNum(10,i+1);
+             digitos[i]=num%pote/div;
+             div=div*10;
+             tempstr = numerosStr[digitos[i]];
+             numstr.insert(0, tempstr);
+             //cout << pote << " " <<  " " << digitos[i] << " "<< div << endl;
+             //cout << numerosStr[digitos[i]] << endl;
+         }*/
+         // Se declara la cadena con texto por defecto para comprobar el cambio por referencia
 
-          case 9:
-            cout << "ingrese un numero:" << endl;
-            cin >> n; // se lee como string para manejar cada posición!
-            //
-            int d;
-            long suma;
-            suma = 0;
-            for (int i=0; i < (int)n.length(); i++) {
-               d = n[i] - '0';  // Codigo ASCII menos el caracter '0': 52(el cuatro)-48(el cero)=4
-               suma += potenciaNum(d, d);
-            }
-            cout << "El resultado de la SUMA de digitos elevados a si mismos: " << suma << endl;
-            break;
+         num_to_str(num, strbase);
+         cout << "la conversion es (texto): " << strbase << endl;
+         break;
 
-         case 10:
-            int orden;
-            cout << "Ingrese el orden del numero primo a buscar:" << endl;
-            cin >> orden;
-            int contNum, tope;
-            contNum = 0; // contador de numeros enteros en orden creciente
-            tope = orden; // tope para descontar a medida que encuentra primos
-            //
-            while(tope != 0) {
-                if(esPrimo(contNum)) { // verifica cada numero y descuenta al encontrar un primo
-                    tope--;
-                }
-                if(tope != 0) // incrementa el numero, si no se ha alcazado el tope de primos
-                    contNum++;
-            }
-            cout << "El numero primo de orden [" << orden << "] es: " << contNum << endl;
-            break;
+     case 7:
+         cout << "ingrese la palabra: " << endl;
+         cin >> palabra;
+         string nuevapal = "";
+         for (int i=0;i<= (int)palabra.length();i++ ) {
+             //
+             bool letraExiste = false; // evalua en la nuevapal si ya la letra existe
+             for (int k = 0; k < (int)nuevapal.length(); k++) {
+                 if(nuevapal[k] == palabra[i]) {
+                     letraExiste = true; // creacion de la bandera para verificar
+                 }
+             }
+             if(!letraExiste) { // si la letra no esta en la nuevapal, la concatena y vuelve e inicia el ciclo
+                 nuevapal += palabra[i];
+             }
+         }
+         cout << "palabra original: " << palabra << endl;
+         cout << "Palabra sin repetidos: " << nuevapal << endl;
+         break;
 
-         case 13:
-            int n;
-            cout << "ingrese el numero al que le quiere sumar sus numeros primos menores: " << endl;
-            cin >> n;
-            int acuSUM,com;
-            acuSUM=0, com=0; // acusmu= sumatoria de primos  com= contador de numeros naturales para determinar si es primo
-            while (com<n){
-                if (esPrimo(com)){
-                    acuSUM= acuSUM + com;
-                }
-                com++;
-            }
-                cout << "el resultado de la suma es: " << acuSUM << endl;
-            break;
+     } // fin switch
+   } // fin while
+   return 0;
+   //
 
-         case 11:
-           int top;
-           cout << "Ingrese un numero para el MCM:" << endl;
-           cin >> top;
-           //
-           int mcm, res, num; // mcm, va acumulando el minimo comun multiplo a medida que aumenta los numeros
-           // res, utilizado para calcular el residuo
-           // num, utilizado para calculo del mcm sin afectar el i
-           long prod;
-           for(int i = 1; i <= top; i++) { // ciclo desde 1 hasta el # que se le calcula el mcm
-              num = i;
-              if (num == 1) {
-                  mcm = num;
-              } else {
-                  prod = mcm * num; // prod, variable que almacena el prodcuto del mcm y del num
-                  //
-                  do // ciclo que procesa los numeros que son distintos a 1
-                  {
-                      res = mcm % num; // calculo de un divisor comun!
-                      mcm = num;
-                      num = res;
-                  } while (res != 0);
-
-                  mcm = prod / mcm;
-              }
-           }
-           cout << "El minimo comun multiplo es: " << mcm << endl;
-           break;
-
-         case 4:
-            int h1, m1, h2, m2, acuHOR, acuMIN;
-            cout<< "ingrese la primera hora: " << endl;
-            cin>>h1;
-            cout << "ingrese los minutos: " << endl;
-            cin >> m1;
-            cout << "ingrese la segunda hora: " << endl;
-            cin>> h2;
-            cout << "ingrese los minutos: " << endl;
-            cin >> m2;
-            acuHOR= (h1+h2);
-
-            acuMIN= (m1+m2);
-            if (acuHOR<=23 && acuMIN<=59) {
-                cout << "la hora es: " << acuHOR << ":" << acuMIN << endl;
-                }
-               if (acuHOR>=24) {
-                 acuHOR= (acuHOR - 24);
-
-                 cout << "la hora es: "<< acuHOR << ":" << acuMIN<< endl;
-                }
-              if (acuMIN>60) {
-                       acuMIN= (acuMIN - 60);
-                       acuHOR=(acuHOR + 1);
-                       cout << "la hora es: "<< acuHOR << ":" << acuMIN<< endl;
-                }
-
-          case 16:
-                int j;
-                cout << "Ingrese la semilla: " << endl;
-                cin >> j; // leemos la semilla
-
-                vector<int> a; // conjunto de datos de un mismo tipo
-                int semilla = j;
-
-                // Calcular serie
-                while (semilla != 1) {
-                    a.push_back(semilla);
-                    if (semilla % 2 == 0) {
-                        semilla = semilla / 2;
-                    } else {
-                        semilla = (3 * semilla) + 1;
-                    }
-                }
-                // La semilla es 1
-                a.push_back(semilla); // añadir el elemente que esta dento () adentro del vector
-
-                cout << "La seria mas larga con la semilla: " << j << ", teniendo " << a.size() << " elementos." << endl;
-
-                // Imprimir la serie
-                cout << "La serie es la siguiente:" << endl;
-
-                for (int i=0; i < a.size(); i++) {
-                    cout << a[i] << " ";
-                }
-
-        } // fin switch
-       } //fin while
-
-return 0; // fin main!
-}
-//
-int fact(int f){
-    int factorial=f;
-    if(factorial>1){
-        factorial=f*fact(f-1); //llamada recursiva de la funcion
-        return factorial;
-    }
-    else{
-        return 1;
-    }
-}
-//
+} // fin main
 long potenciaNum(long numero, long potencia)
 {
     long resultado = numero;
+    if(0 == potencia) {
+        resultado = 1;
+    }
     while (potencia > 1)
     {
         resultado = resultado * numero;
@@ -270,39 +151,80 @@ long potenciaNum(long numero, long potencia)
     }
     return resultado;
 }
-//
-bool esPrimo(int numero) {
-  bool bPrimo = true;
-  if (numero == 0 || numero == 1) bPrimo = false;
-  /*
-          El número 4 es un caso especial, pues al dividirlo entre
-          2 el resultado es 2, y el ciclo nunca se cumple, indicando que
-          el 4 SÍ es primo, pero realmente NO lo es, así que si el número es 4
-                        inmediatamente indicamos que no es primo (regresando 0)
-          Nota: solo es para el 4, los demás funcionan bien
-  */
-  if (numero == 4) bPrimo = false;
-  for (int x = 2; x < numero / 2; x++) {
-    // Si es divisible por cualquiera de estos números, no
-    // es primo
-    if (numero % x == 0) bPrimo = false;
-  }
-  // Si no se pudo dividir por ninguno de los de arriba, sí es primo
-  return bPrimo;
+
+long str_to_num(string n)
+{
+    int numeros[10]={'0','1','2','3','4','5','6','7','8','9'};
+    int cont=0;  int final=0; int l=n.length();
+    for (int i=0; i < l; i++){
+        cont=potenciaNum(10, (l-1) - i); // contador de potencias de base 10--- 10^0, 10^1...
+        // cout << "n[i]=" << n[i] << endl;
+        // cout << "cont=" << cont << endl;
+
+         for (int k=0; k<10 ;k++ ) { // ciclo para iterar en el vector numeros
+               if (numeros[k]==n[i]) {
+                  final+= k *cont;
+               }
+         }
+
+     }
+     return final;
 }
-//
+void num_to_str(int num, string& strx) // direccion por parametros de referencia
+   {
+    int numerosStr[10]={'0','1','2','3','4','5','6','7','8','9'};
+    //
+    int temp=num; int l=1; int pote=0;
+    while (temp>0) {
+            pote=potenciaNum(10,l); // potencias base 10 para cada posicion del numero
+            //cout << temp%pote  << endl;
+            temp-=temp%pote;
+            l++;
+    }
+    l--;
+    int digitos[l]; int div=1;
+    string numstr="*", tempstr="";
+    for (int i=0; i < l ;i++ ) {
+        pote=potenciaNum(10,i+1); // division del numero por posicion, separandolos asi en base 10
+        digitos[i]=num%pote/div; // encontrar cada numero
+        div=div*10;
+        tempstr = numerosStr[digitos[i]]; // verificacion si existe el numero en el arreglo
+        numstr.insert(0, tempstr); // se utiliza para ordenar el numero
+        //cout << pote << " " <<  " " << digitos[i] << " "<< div << endl;
+        //cout << numerosStr[digitos[i]] << endl;
+    }
+     strx = numstr; // valor de string con * para demostrar que si es cadena y se puede concatenar
+     return ;
+   }
 
+/*
+codigo arduino
+int pesos[10]={50000,20000,10000,5000,2000,1000,500,200,100,50};
+void setup()
+{
+  Serial.begin(9600);
+  Serial.print("ingrese el valor: ");
+  delay(6000);
+}
 
+void loop()
+{
+   int valor=Serial.read();
+   Serial.print(valor);
+   for (int cont=0;cont < 10;cont++) {
+            // paso 1:
+            int entero=Serial.read();
+            //
+            entero = (int)(valor/pesos[cont]);
+            // paso 2:
+            Serial.println ("se necesitan: "); Serial.println(entero); Serial.println(" billetes de "); Serial.println(pesos[cont]);
+            //
+            valor=(valor%pesos[cont]);
 
+         }
 
+           Serial.println ("Faltante: "); Serial.println(valor);
 
-
-
-
-
-
-
-
-
-
+}
+*/
 
